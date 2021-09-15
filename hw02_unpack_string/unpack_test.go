@@ -16,6 +16,13 @@ func TestUnpack(t *testing.T) {
 		{input: "abccd", expected: "abccd"},
 		{input: "", expected: ""},
 		{input: "aaa0b", expected: "aab"},
+		{input: "d\n5abc", expected: "d\n\n\n\n\nabc"},
+		{input: "d\t5abc", expected: "d\t\t\t\t\tabc"},
+		{input: "r", expected: "r"},
+		{input: "ew 0w", expected: "eww"},
+		{input: " 0w", expected: "w"},
+		{input: " 2w", expected: "  w"},
+		{input: "r-2w", expected: "r--w"},
 		// uncomment if task with asterisk completed
 		// {input: `qwe\4\5`, expected: `qwe45`},
 		// {input: `qwe\45`, expected: `qwe44444`},
@@ -31,6 +38,24 @@ func TestUnpack(t *testing.T) {
 			require.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func TestRussianLetters(t *testing.T) {
+	const str, want = "я4ч3т2ь", "яяяячччтть"
+	got, err := Unpack(str)
+	if err != nil {
+		t.Fatalf("Unpack(%v) returns error: %v", str, err)
+	}
+	if got != want {
+		t.Fatalf("Unpack(%v) = %v; want %v", str, got, want)
+	}
+}
+
+func TestChineseLetters(t *testing.T) {
+	const str, want = "中5文2字0母", "中中中中中文文母"
+	got, err := Unpack(str)
+	require.Nil(t, err)
+	require.Equal(t, want, got)
 }
 
 func TestUnpackInvalidString(t *testing.T) {
