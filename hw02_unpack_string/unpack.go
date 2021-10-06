@@ -18,7 +18,7 @@ func Unpack(input string) (string, error) {
 	for _, r := range input {
 		if !unicode.IsDigit(r) {
 			if first != 0 {
-				b.WriteRune(first)
+				b.WriteString(string(first))
 			}
 			first = r
 		}
@@ -35,7 +35,7 @@ func Unpack(input string) (string, error) {
 		}
 	}
 	if first != 0 {
-		b.WriteRune(first)
+		b.WriteString(string(first))
 	}
 
 	return b.String(), nil
