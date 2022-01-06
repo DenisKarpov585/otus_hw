@@ -33,8 +33,7 @@ func TestList(t *testing.T) {
 			} else {
 				l.PushBack(v)
 			}
-		} // [80, 60, 40, 10, 30, 50, 70]
-
+		} // [80, 60, 40, 10, 30, 50, 70
 		require.Equal(t, 7, l.Len())
 		require.Equal(t, 80, l.Front().Value)
 		require.Equal(t, 70, l.Back().Value)
@@ -47,5 +46,38 @@ func TestList(t *testing.T) {
 			elems = append(elems, i.Value.(int))
 		}
 		require.Equal(t, []int{70, 80, 60, 40, 10, 30, 50}, elems)
+	})
+
+	t.Run("no desired element", func(t *testing.T) {
+		l := NewList()
+
+		l.PushFront(50)
+		l.PushFront(60)
+		l.PushBack(30)
+		l.Remove(&ListItem{20, nil, nil})
+		require.Equal(t, 3, l.Len())
+		l.Remove(l.Back().Prev)
+		require.Equal(t, 2, l.Len())
+
+		l.PushFront(40)
+		l.PushFront(60)
+		l.PushBack(12)
+		l.PushFront(11)
+
+		l.MoveToFront(&ListItem{60, l.Front().Next.Next, l.Front()})
+		l.MoveToFront(&ListItem{12, l.Front().Next.Next, l.Front()})
+
+		elems := make([]int, 0, l.Len())
+		for i := l.Front(); i != nil; i = i.Next {
+			elems = append(elems, i.Value.(int))
+		}
+		require.Equal(t, []int{60, 11, 40, 60, 30, 12}, elems)
+	})
+
+	t.Run("true &", func(t *testing.T) {
+		l := NewList()
+		l.PushBack(20)
+		require.Equal(t, l.Back(), l.Front())
+		l.PushFront(10)
 	})
 }
