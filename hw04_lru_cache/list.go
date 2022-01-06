@@ -99,7 +99,6 @@ func (l *list) MoveToFront(i *ListItem) {
 		l.Remove(i)
 		l.PushFront(i.Value)
 	}
-
 }
 
 func (l *list) Check(i *ListItem) bool {
