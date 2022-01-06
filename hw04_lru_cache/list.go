@@ -109,7 +109,6 @@ func (l *list) Check(i *ListItem) bool {
 			return false
 		}
 		return !(i.Next.Prev.Value != i.Value || i.Next.Prev.Prev != i.Prev || i.Prev.Next.Next != i.Next)
-	} else {
-		return true
 	}
+	return true
 }
