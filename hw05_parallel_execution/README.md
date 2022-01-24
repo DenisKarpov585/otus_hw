@@ -68,7 +68,7 @@
 - https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem
 - `sync.WaitGroup`
 - `go test -v -race -count=100 .`
-
+    
 ### Частые ошибки
 1) `racedetector` ругается на строчку с ассертом в тестах:
 - простой случай: после выхода из `Run` остаются висячие горутины, отсюда и получаем `data race` -
