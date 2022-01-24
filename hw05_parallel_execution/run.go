@@ -6,8 +6,10 @@ import (
 	"sync/atomic"
 )
 
-var ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
-var ErrLessThenZeroGoroutines = errors.New("errors number goroutines")
+var (
+	ErrErrorsLimitExceeded    = errors.New("errors limit exceeded")
+	ErrLessThenZeroGoroutines = errors.New("errors number goroutines")
+)
 
 type Task func() error
 
@@ -27,7 +29,6 @@ func Run(tasks []Task, n, m int) error {
 				if err := task(); err != nil {
 					atomic.AddInt32(&errorCount, 1)
 				}
-
 			}
 		}()
 	}
